@@ -67,11 +67,14 @@ exports.makeCompatible = function (Promise, Fiber) {
     // The overridden es6PromiseThen function is adequate here because these
     // two callbacks do not need to run in a Fiber.
     es6PromiseThen.call(promise, function (result) {
+      Promise._logYields && console.log('then callback')
       tryCatchNextTick(fiber, run, [result]);
     }, function (error) {
+      Promise._logYields && console.log('error callback')
       tryCatchNextTick(fiber, throwInto, [error]);
     });
 
+    Promise._logYields && console.log('yielding fiber')
     return Fiber.yield();
   }
 
