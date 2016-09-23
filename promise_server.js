@@ -75,6 +75,7 @@ exports.makeCompatible = function (Promise, Fiber) {
     });
 
     Promise._logYields && console.log('yielding fiber')
+    Promise._logYields && console.trace();
     return Fiber.yield();
   }
 
